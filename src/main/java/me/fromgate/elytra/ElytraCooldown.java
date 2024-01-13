@@ -11,14 +11,6 @@ public class ElytraCooldown {
 
     private static Map<String, Long> cooldowns = new HashMap<>();
 
-    static void clearCoolDown(Player player, Type type) {
-        if (type == null) {
-            for (Type t : Type.values()) clearCoolDown(player, t);
-        } else if (cooldowns.containsKey(player.getName() + "." + type.name()))
-            cooldowns.remove(player.getName() + "." + type.name());
-    }
-
-
     public static boolean checkAndUpdate(Player player, Type type) {
         if (!type.isEnabled()) return true;
         String name = player.getName() + "." + type.name();
