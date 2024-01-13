@@ -24,41 +24,39 @@ public class BoostCheckTask extends BukkitRunnable {
 			if (!Util.isElytraWeared(player)) return;
 			if(player.isSwimming() || player.hasMetadata("falling")) return;
 			Location l = player.getLocation();
-			if(oldLocale.containsKey(player)){
-				if(!Util.isSameBlocks(oldLocale.get(player), l)){
-					Vector vector = player.getVelocity();
-					if (Util.isNotBoostAngle(oldLocale.get(player).getPitch())){
-						oldLocale.remove(player);
-						oldLocale.put(player, l);
-						return;
-					}
-					if (Util.isNotBoostAngle(l.getPitch())){
-						oldLocale.remove(player);
-						oldLocale.put(player, l);
-						return;
-					}
-					if (vector.length() < Elytra.getCfg().activationSpeedMin){
-						oldLocale.remove(player);
-						oldLocale.put(player, l);
-						return;
-					}
-					if (vector.length() > Elytra.getCfg().activationSpeedMax){
-						oldLocale.remove(player);
-						oldLocale.put(player, l);
-						return;
-					}
-					if (!ElytraCooldown.checkAndUpdate(player, ElytraCooldown.Type.SPEED_UP)){
-						oldLocale.remove(player);
-						oldLocale.put(player, l);
-						return;
-					}
-					player.setVelocity(vector.multiply(Elytra.getCfg().speedUpMult));
-					Util.playParticles(player);
-					Util.playSound(player);
-					Util.processGForce(player);
+			if(oldLocale.containsKey(player) && !Util.isSameBlocks(oldLocale.get(player), l)){
+				Vector vector = player.getVelocity();
+				if (Util.isNotBoostAngle(oldLocale.get(player).getPitch())){
 					oldLocale.remove(player);
 					oldLocale.put(player, l);
+					return;
 				}
+				if (Util.isNotBoostAngle(l.getPitch())){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				if (vector.length() < Elytra.getCfg().activationSpeedMin){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				if (vector.length() > Elytra.getCfg().activationSpeedMax){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				if (!ElytraCooldown.checkAndUpdate(player, ElytraCooldown.Type.SPEED_UP)){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				player.setVelocity(vector.multiply(Elytra.getCfg().speedUpMult));
+				Util.playParticles(player);
+				Util.playSound(player);
+				Util.processGForce(player);
+				oldLocale.remove(player);
+				oldLocale.put(player, l);
 			} else {
 				oldLocale.put(player, l);
 			}

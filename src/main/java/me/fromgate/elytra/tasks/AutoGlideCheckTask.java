@@ -18,34 +18,21 @@ public class AutoGlideCheckTask extends BukkitRunnable {
 	@Override
 	public void run() {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
-			if (player.hasPermission("elytra.auto")){
-				if(!player.isSwimming() && !player.hasMetadata("falling")){
-					Location l = player.getLocation();
-					if(oldLocale.containsKey(player)){
-						if(!Util.isSameBlocks(l, oldLocale.get(player))){
-							if(Util.checkEmptyBlocks(oldLocale.get(player), l)){
-								if(!Util.isElytraWeared(player)){
-									if(Elytra.getCfg().autoElytraEquip)
-									{
-										if(player.hasPermission("elytra.auto-equip")){
-											if(Util.hasElytraStorage(player)){
-												autoEquip(player);
-											}
-										}
-									}
-								}
-								if (!player.isGliding()){
-									if (!player.isFlying()){
-										player.setGliding(true);
-									}
-								}
-							}
-							oldLocale.remove(player);
-							oldLocale.put(player, l);
+			if (player.hasPermission("elytra.auto") && !player.isSwimming() && !player.hasMetadata("falling")){
+				Location l = player.getLocation();
+				if (oldLocale.containsKey(player) && !Util.isSameBlocks(l, oldLocale.get(player))){
+					if(Util.checkEmptyBlocks(oldLocale.get(player), l)){
+						if(!Util.isElytraWeared(player) && Elytra.getCfg().autoElytraEquip && player.hasPermission("elytra.auto-equip") && Util.hasElytraStorage(player)){
+							autoEquip(player);
 						}
-					}else{
-						oldLocale.put(player, l);
+						if (!player.isGliding() && !player.isFlying()){
+							player.setGliding(true);
+						}
 					}
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+				} else {
+					oldLocale.put(player, l);
 				}
 			}
 		}
@@ -61,12 +48,10 @@ public class AutoGlideCheckTask extends BukkitRunnable {
 		}
 		List<ItemStack> storage = new ArrayList<ItemStack>(Arrays.asList(inv.getStorageContents()));
 		for(ItemStack item : storage){
-			if(item!=null){
-				if(item.getType().equals(Material.ELYTRA)){
-					elytra = item;
-					break;
-				}
-			}   		
+			if (item.getType().equals(Material.ELYTRA)) {
+				elytra = item;
+				break;
+			}
 		}
 		storage.remove(elytra);
 		if(chestplate.getType()!=Material.AIR){
