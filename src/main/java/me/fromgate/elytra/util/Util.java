@@ -3,6 +3,7 @@ package me.fromgate.elytra.util;
 import me.fromgate.elytra.Elytra;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -107,26 +108,22 @@ public class Util {
 
     public static boolean isElytraWeared(Player player) {
         if (player.getInventory().getChestplate() == null) return false;
-        if (player.getInventory().getChestplate().getType() != Material.ELYTRA) return false;
-        if (player.getInventory().getChestplate().getDurability() >= 431) return false;
-        return true;
+        else return player.getInventory().getChestplate().getType() == Material.ELYTRA;
     }
     
     public static boolean hasElytraStorage(Player player) {
     	PlayerInventory inv = player.getInventory();
-    	if(inv.getStorageContents()!=null){
-    		for(ItemStack item : inv.getStorageContents()){
-    			if(item!=null){
-    				if(!item.getType().equals(Material.AIR)){
-            			if(item.getType().equals(Material.ELYTRA)){
-            				if(item.getDurability() <= 431)
-            					return true;
-            			}
-            		}
-    			}     		
-        	}
-    	}
-    	return false;
+        inv.getStorageContents();
+        for (ItemStack item : inv.getStorageContents()) {
+            if (item != null) {
+                if (!item.getType().equals(Material.AIR)) {
+                    if (item.getType().equals(Material.ELYTRA)) {
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     
     public static ItemStack[] listToArray(List<ItemStack> list){

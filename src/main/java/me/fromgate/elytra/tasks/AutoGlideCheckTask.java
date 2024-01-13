@@ -11,10 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AutoGlideCheckTask extends BukkitRunnable {	
 	private Map<Player, Location> oldLocale = new HashMap<>();
@@ -56,16 +53,13 @@ public class AutoGlideCheckTask extends BukkitRunnable {
 	
 	private void autoEquip(Player player){
 		PlayerInventory inv = player.getInventory();
-		List<ItemStack> storage = new ArrayList<ItemStack>();
 		ItemStack chestplate = new ItemStack(Material.AIR);
 		ItemStack elytra = new ItemStack(Material.AIR);       	
 		if(inv.getChestplate()!=null && inv.getChestplate().getType()!=Material.AIR){
 			chestplate = inv.getChestplate();
 			inv.setChestplate(new ItemStack(Material.AIR));
 		}
-		for(ItemStack item : inv.getStorageContents()){
-			storage.add(item);        		
-		}
+		List<ItemStack> storage = new ArrayList<ItemStack>(Arrays.asList(inv.getStorageContents()));
 		for(ItemStack item : storage){
 			if(item!=null){
 				if(item.getType().equals(Material.ELYTRA)){
