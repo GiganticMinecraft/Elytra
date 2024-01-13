@@ -22,7 +22,7 @@ public class AutoGlideCheckTask extends BukkitRunnable {
 	public void run() {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
 			if (player.hasPermission("elytra.auto")){
-				if(!player.hasMetadata("swimming") && !player.hasMetadata("falling")){
+				if(!player.isSwimming() && !player.hasMetadata("falling")){
 					Location l = player.getLocation();
 					if(oldLocale.containsKey(player)){
 						if(!Util.isSameBlocks(l, oldLocale.get(player))){

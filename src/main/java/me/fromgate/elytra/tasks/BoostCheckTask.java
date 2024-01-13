@@ -22,7 +22,7 @@ public class BoostCheckTask extends BukkitRunnable {
 			if (!player.hasPermission("elytra.speedup")) return;
 			if (!player.isGliding()) return;
 			if (!Util.isElytraWeared(player)) return;
-			if(player.hasMetadata("swimming") || player.hasMetadata("falling")) return;
+			if(player.isSwimming() || player.hasMetadata("falling")) return;
 			Location l = player.getLocation();
 			if(oldLocale.containsKey(player)){
 				if(!Util.isSameBlocks(oldLocale.get(player), l)){

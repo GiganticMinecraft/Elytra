@@ -15,7 +15,7 @@ public class ConstSpeedCheckTask extends BukkitRunnable {
 			if (!player.hasPermission("elytra.const-flight")) return;
 			if (!player.isGliding()) return;
 			if (!Util.isElytraWeared(player)) return;
-			if(player.hasMetadata("swimming") || player.hasMetadata("falling")) return;
+			if(player.isSwimming() || player.hasMetadata("falling")) return;
 			Vector vector = player.getVelocity();
 			if (vector.length() > Elytra.getCfg().isConstSpeed) return;
 			player.setVelocity(vector.normalize().multiply(Elytra.getCfg().isConstSpeed));

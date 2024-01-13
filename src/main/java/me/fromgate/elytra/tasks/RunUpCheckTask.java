@@ -25,51 +25,49 @@ public class RunUpCheckTask extends BukkitRunnable {
 	
 	@Override
 	public void run() {
-			for(Player player : Bukkit.getServer().getOnlinePlayers())
-			{
-				if (!player.hasPermission("elytra.runup")) return;
-				if (!Util.isElytraWeared(player)) return;
-				if (player.isGliding()) return;
-				if (player.isFlying()) return;
-				Location l = player.getLocation();			
-				if(oldLocale.containsKey(player)){
-					if (Util.isSameBlocks(oldLocale.get(player), l)) return;
-					if (!player.isSprinting()) {
-						setRunUpMode(player, false);
-						return;
-			        }
-					if (!timeToJump(player)){
-						oldLocale.remove(player);
-					    oldLocale.put(player, l);
-					    return;
-					}
-					
-			        if (!Util.checkAngle(l.getPitch(), cfg.runUpMinAngle, cfg.runUpMaxAngle)){
-			        	oldLocale.remove(player);
-					    oldLocale.put(player, l);
-					    return;
-			        }
-			        if (!ElytraCooldown.checkAndUpdate(player, ElytraCooldown.Type.RUN_UP)){
-			        	oldLocale.remove(player);
-					    oldLocale.put(player, l);
-					    return;
-			        }
-			        setRunUpMode(player, false);
-			        player.setSprinting(false);
-			        player.teleport(l.add(0, 1, 0));
-			        Vector v = player.getLocation().getDirection();
-			        v.multiply(cfg.runUpBoost);
-			        player.setVelocity(v);
-			        Util.playParticles(player);
-			        Util.playSound(player);
-			        Bukkit.getScheduler().runTaskLater(Elytra.getPlugin(), () -> player.setGliding(true), 5);
-			        oldLocale.remove(player);
-					oldLocale.put(player, l);
-				}else{
-					oldLocale.put(player, l);
+		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (!player.hasPermission("elytra.runup")) return;
+			if (!Util.isElytraWeared(player)) return;
+			if (player.isGliding()) return;
+			if (player.isFlying()) return;
+			Location l = player.getLocation();
+			if(oldLocale.containsKey(player)){
+				if (Util.isSameBlocks(oldLocale.get(player), l)) return;
+				if (!player.isSprinting()) {
+					setRunUpMode(player, false);
+					return;
 				}
+				if (!timeToJump(player)){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+
+				if (!Util.checkAngle(l.getPitch(), cfg.runUpMinAngle, cfg.runUpMaxAngle)){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				if (!ElytraCooldown.checkAndUpdate(player, ElytraCooldown.Type.RUN_UP)){
+					oldLocale.remove(player);
+					oldLocale.put(player, l);
+					return;
+				}
+				setRunUpMode(player, false);
+				player.setSprinting(false);
+				player.teleport(l.add(0, 1, 0));
+				Vector v = player.getLocation().getDirection();
+				v.multiply(cfg.runUpBoost);
+				player.setVelocity(v);
+				Util.playParticles(player);
+				Util.playSound(player);
+				Bukkit.getScheduler().runTaskLater(Elytra.getPlugin(), () -> player.setGliding(true), 5);
+				oldLocale.remove(player);
+				oldLocale.put(player, l);
+			}else{
+				oldLocale.put(player, l);
 			}
-		
+		}
 	}
 	
 	private boolean timeToJump(Player player) {

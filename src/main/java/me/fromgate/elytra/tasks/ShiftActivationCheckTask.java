@@ -14,7 +14,7 @@ public class ShiftActivationCheckTask extends BukkitRunnable {
 	public void run() {
 		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
 			if (!player.hasPermission("elytra.shift-activation")) return;
-			if(player.hasMetadata("swimming") || player.hasMetadata("falling")) return;
+			if(player.isSwimming() || player.hasMetadata("falling")) return;
 			if (!player.isSneaking()) return;
 			if (!player.isGliding()) return;
 			if (!Util.isElytraWeared(player)) return;
