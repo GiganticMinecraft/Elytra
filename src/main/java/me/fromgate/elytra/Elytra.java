@@ -8,6 +8,7 @@ import me.fromgate.elytra.tasks.ShiftActivationCheckTask;
 import me.fromgate.elytra.util.ElytraConfig;
 import me.fromgate.elytra.util.Util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Elytra extends JavaPlugin {
@@ -40,10 +41,10 @@ public class Elytra extends JavaPlugin {
             new ShiftActivationCheckTask().runTaskTimer(plugin, 20, 10);
         }
         if(cfg.autoElytra){
-            new AutoGlideCheckTask().runTaskTimer(plugin, 20, 8);
+            Bukkit.getPluginManager().registerEvents(new AutoGlideCheckTask(), plugin);
         }
         if (cfg.runUpEnable){
             new RunUpCheckTask().runTaskTimer(plugin, 20, 6);
-        }       
+        }
     }
 }

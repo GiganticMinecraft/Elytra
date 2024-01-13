@@ -24,7 +24,7 @@ public class ElytraCooldown {
         return true;
     }
 
-    public static enum Type {
+    public enum Type {
         RUN_UP,
         SPEED_UP,
         SHIFT;
