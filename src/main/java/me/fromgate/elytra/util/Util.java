@@ -27,15 +27,14 @@ public class Util {
         cooldownTime = Time.parseTime(cfg.cooldownTime);
     }
 
-    public static boolean isBoostAngle(double pitch) {
-        return checkAngle(pitch, cfg.minAngle, cfg.maxAngle);
+    public static boolean isNotBoostAngle(double pitch) {
+        return !checkAngle(pitch, cfg.minAngle, cfg.maxAngle);
     }
 
     public static boolean checkAngle(double pitch, int min, int max) {
         pitch = -pitch;
         if (min > (pitch)) return false;
-        if (max < (pitch)) return false;
-        return true;
+        return !(max < (pitch));
     }
 
     public static void playSound(final Player player) {

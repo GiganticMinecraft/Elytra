@@ -1,14 +1,6 @@
 package me.fromgate.elytra.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class Time {
-    public static Long timeToTicks(Long time) {
-        //1000 ms = 20 ticks
-        return Math.max(1, (time / 50));
-    }
 
     public static Long parseTime(String time) {
         if (time == null || time.isEmpty()) return 0L;
@@ -46,38 +38,5 @@ public class Time {
         return intStr.matches("\\d+");
     }
 
-    public static String fullTimeToString(long time, String format) {
-        Date date = new Date(time);
-        DateFormat formatter = new SimpleDateFormat(format);
-        return formatter.format(date);
-    }
-
-    public static String timeHHMMSS(long time) {
-        long t = time / 1000;
-        int sec = (int) t % 60;
-        t = t / 60;
-        int min = (int) t % 60;
-        t = t / 60;
-        int hour = (int) t % 60;
-        int days = (int) t / 60;
-        return ((days > 0) ? days + "d " : "") + String.format("%02d:%02d:%02d", hour, min, sec);
-    }
-
-    public static String timeToString(long time) {
-        long t = time / 1000; 
-        int sec = (int) t % 60;
-        t = t / 60;
-        int min = (int) t % 60;
-        t = t / 60;
-        int hour = (int) t % 60;
-        int days = (int) t / 60;
-
-        StringBuilder sb = new StringBuilder();
-        if (days > 0) sb.append(days).append("d ");
-        if (hour > 0 || sb.length() > 0) sb.append(hour).append("h ");
-        if (min > 0 || sb.length() > 0) sb.append(min).append("min ");
-        sb.append(sec).append("sec ");
-        return sb.toString();
-    }
 }
 

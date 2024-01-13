@@ -25,7 +25,6 @@ public class RunUpCheckTask extends BukkitRunnable {
 	
 	@Override
 	public void run() {
-		if(Bukkit.getServer().getOnlinePlayers()!=null && !Bukkit.getServer().getOnlinePlayers().isEmpty()){			
 			for(Player player : Bukkit.getServer().getOnlinePlayers())
 			{
 				if (!player.hasPermission("elytra.runup")) return;
@@ -70,7 +69,6 @@ public class RunUpCheckTask extends BukkitRunnable {
 					oldLocale.put(player, l);
 				}
 			}
-		}
 		
 	}
 	

@@ -20,39 +20,36 @@ public class AutoGlideCheckTask extends BukkitRunnable {
 	private Map<Player, Location> oldLocale = new HashMap<>();
 	@Override
 	public void run() {
-		if(Bukkit.getServer().getOnlinePlayers()!=null && !Bukkit.getServer().getOnlinePlayers().isEmpty()){ 
-			for(Player player : Bukkit.getServer().getOnlinePlayers())
-			{
-				if (player.hasPermission("elytra.auto")){
-					if(!player.hasMetadata("swimming") && !player.hasMetadata("falling")){
-						Location l = player.getLocation();
-						if(oldLocale.containsKey(player)){
-							if(!Util.isSameBlocks(l, oldLocale.get(player))){
-								if(Util.checkEmptyBlocks(oldLocale.get(player), l)){
-									if(!Util.isElytraWeared(player)){
-										if(Elytra.getCfg().autoElytraEquip)
-										{
-											if(player.hasPermission("elytra.auto-equip")){
-												if(Util.hasElytraStorage(player)){
-													autoEquip(player);
-												}
+		for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+			if (player.hasPermission("elytra.auto")){
+				if(!player.hasMetadata("swimming") && !player.hasMetadata("falling")){
+					Location l = player.getLocation();
+					if(oldLocale.containsKey(player)){
+						if(!Util.isSameBlocks(l, oldLocale.get(player))){
+							if(Util.checkEmptyBlocks(oldLocale.get(player), l)){
+								if(!Util.isElytraWeared(player)){
+									if(Elytra.getCfg().autoElytraEquip)
+									{
+										if(player.hasPermission("elytra.auto-equip")){
+											if(Util.hasElytraStorage(player)){
+												autoEquip(player);
 											}
-										}        	
-									}
-									if (!player.isGliding()){
-										if (!player.isFlying()){
-											player.setGliding(true);
 										}
 									}
 								}
-								oldLocale.remove(player);
-								oldLocale.put(player, l);
+								if (!player.isGliding()){
+									if (!player.isFlying()){
+										player.setGliding(true);
+									}
+								}
 							}
-						}else{
+							oldLocale.remove(player);
 							oldLocale.put(player, l);
 						}
-					}				
-				}		
+					}else{
+						oldLocale.put(player, l);
+					}
+				}
 			}
 		}
 	}
