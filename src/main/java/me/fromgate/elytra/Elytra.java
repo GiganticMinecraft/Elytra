@@ -35,7 +35,7 @@ public class Elytra extends JavaPlugin {
             task.runTaskTimer(plugin, 20, 13);
         }
         if(cfg.boostEnable){
-            new BoostCheckTask().runTaskTimer(getPlugin(), 20, 8);
+            Bukkit.getPluginManager().registerEvents(new BoostCheckTask(), plugin);
         }
         if(cfg.shiftActivation){
             new ShiftActivationCheckTask().runTaskTimer(plugin, 20, 10);
