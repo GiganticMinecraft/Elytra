@@ -23,7 +23,7 @@ jobs:
           mvn package
 
       - name: publish artifacts
-        uses: softprops/actions-gh-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           files: ./target/Elytra-*
           draft: false
