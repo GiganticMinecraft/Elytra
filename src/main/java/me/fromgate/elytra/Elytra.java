@@ -44,7 +44,7 @@ public class Elytra extends JavaPlugin {
             Bukkit.getPluginManager().registerEvents(new AutoGlideCheckTask(), plugin);
         }
         if (cfg.runUpEnable){
-            new RunUpCheckTask().runTaskTimer(plugin, 20, 6);
+            Bukkit.getPluginManager().registerEvents(new RunUpCheckTask(), plugin);
         }
     }
 }
