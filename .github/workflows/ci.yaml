@@ -1,0 +1,33 @@
+name: Publish artifacts
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: build artifacts
+        run: |
+          mvn install
+          mvn package
+
+      - name: publish artifacts
+        uses: softprops/actions-gh-release@v1
+        with:
+          files: ./target/Elytra-*
+          draft: false
+          prerelease: false
+          tag_name: release-at-${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
