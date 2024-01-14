@@ -16,8 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RunUpCheckTask implements Listener {
-	
-	private Map<Player, Location> oldLocale = new HashMap<>();
+
 	private Map<String, Integer> runners = new HashMap<>();
 	private ElytraConfig cfg;
 	
@@ -33,7 +32,6 @@ public class RunUpCheckTask implements Listener {
 
 		final Location location = player.getLocation();
 
-		if (Util.isSameBlocks(oldLocale.get(player), location)) return;
 		if (!player.isSprinting()) {
 			setRunUpMode(player, false);
 			return;
