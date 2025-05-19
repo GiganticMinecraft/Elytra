@@ -41,7 +41,7 @@ public class RunUpCheckTask implements Listener {
 
 		setRunUpMode(player, false);
 		player.setSprinting(false);
-		player.teleport(location.add(0, 1, 0));
+		player.teleport(location.add(0, 2, 0));
 		Vector v = player.getLocation().getDirection();
 		v.multiply(cfg.runUpBoost);
 		player.setVelocity(v);
